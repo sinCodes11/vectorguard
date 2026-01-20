@@ -1,0 +1,107 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: vectorguard
+      POSTGRES_USER: vectorguard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vectorguard"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg2://vectorguard:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/vectorguard
+      REDIS_URL: redis://redis:6379
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000}
+      RATE_LIMIT_PER_MINUTE: ${RATE_LIMIT_PER_MINUTE:-60}
+      CHROMA_PERSIST_DIRECTORY: /app/chroma_data
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - chroma_data:/app/chroma_data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    restart: unless-stopped
+
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: celery -A src.database.celery_app worker --loglevel=info
+    environment:
+      DATABASE_URL: postgresql+psycopg2://vectorguard:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/vectorguard
+      REDIS_URL: redis://redis:6379
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+      CHROMA_PERSIST_DIRECTORY: /app/chroma_data
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - chroma_data:/app/chroma_data
+    restart: unless-stopped
+
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: celery -A src.database.celery_app beat --loglevel=info
+    environment:
+      DATABASE_URL: postgresql+psycopg2://vectorguard:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/vectorguard
+      REDIS_URL: redis://redis:6379
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  chroma_data:
