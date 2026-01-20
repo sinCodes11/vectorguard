@@ -49,9 +49,14 @@ def cve_ingestion_task(self, hours_back: int = 24):
         job.completed_at = datetime.utcnow()
         job.items_processed = result["processed"]
         job.items_failed = result["failed"]
-        
+
         db.commit()
-        
+
+        # Trigger embedding generation for newly ingested CVEs
+        if result["processed"] > 0:
+            logger.info(f"Triggering embedding generation for {result['processed']} new CVEs")
+            generate_embeddings_task.delay()
+
         return {
             "job_id": job.id,
             "processed": result["processed"],
@@ -96,21 +101,26 @@ def advisory_ingestion_task(self):
         job.completed_at = datetime.utcnow()
         job.items_processed = result["processed"]
         job.items_failed = result["failed"]
-        
+
         db.commit()
-        
+
+        # Trigger embedding generation for newly ingested advisories
+        if result["processed"] > 0:
+            logger.info(f"Triggering embedding generation for {result['processed']} new advisories")
+            generate_embeddings_task.delay()
+
         return {
             "job_id": job.id,
             "processed": result["processed"],
             "failed": result["failed"]
         }
-        
+
     except Exception as e:
         job.status = "failed"
         job.completed_at = datetime.utcnow()
         job.error_message = str(e)
         db.commit()
-        
+
         logger.error(f"Advisory ingestion task failed: {e}")
         raise
         

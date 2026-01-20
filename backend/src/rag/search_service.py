@@ -199,10 +199,11 @@ class RAGPipeline:
             title_text = item.title.lower()
         elif hasattr(item, 'cve_id'):
             title_text = item.cve_id.lower()
-        
-        title_matches = sum(1 for kw in keywords if kw.lower() in title_text)
-        score += (title_matches / len(keywords)) * 0.2
-        
+
+        if keywords:  # Prevent division by zero
+            title_matches = sum(1 for kw in keywords if kw.lower() in title_text)
+            score += (title_matches / len(keywords)) * 0.2
+
         return min(score, 1.0)  # Cap at 1.0
     
     def _merge_and_rank_results(self, db_results: List[SearchResult], 
