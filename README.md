@@ -1,5 +1,15 @@
 # VectorGuard: RAG-Powered Threat Intelligence Platform
 
+<div align="center">
+  <img src="assets/logo.svg" width="200" height="200" />
+</div>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.9%2B-blue?style=flat-square" alt="Python">
+  <img src="https://img.shields.io/badge/RAG-ChromaDB-a855f7?style=flat-square" alt="RAG">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License">
+</p>
+
 A self-hosted threat intelligence knowledge base that ingests CVE databases and security advisories with natural language querying via RAG pipeline.
 
 ## 🛡️ Features
