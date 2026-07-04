@@ -160,10 +160,10 @@ black . && ruff check . && mypy .
 
 ## License
 
-MIT — see LICENSE for details.
+MIT — see [LICENSE](LICENSE) for details.
 
 ## Author
 
 **Daniel Gregg Jr**
-- Portfolio: [daniel-eportfolio.web.app](https://daniel-eportfolio.web.app)
-- LinkedIn: [linkedin.com/in/daniel-sin-1881ske89](https://linkedin.com/in/daniel-sin-1881ske89)
+
+[LinkedIn](https://linkedin.com/in/daniel-sin-1881ske89)
