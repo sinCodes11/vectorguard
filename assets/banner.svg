@@ -1,75 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" width="900" height="200">
   <defs>
-    <linearGradient id="bgVg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0a0a"/>
-      <stop offset="50%" style="stop-color:#0d1117"/>
-      <stop offset="100%" style="stop-color:#1a1f2e"/>
+    <linearGradient id="bgPr" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="accentVg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#a855f7"/>
-      <stop offset="100%" style="stop-color:#3b82f6"/>
-    </linearGradient>
-    <linearGradient id="scanlineVg" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:transparent"/>
-      <stop offset="50%" style="stop-color:#a855f7;stop-opacity:0.12"/>
-      <stop offset="100%" style="stop-color:transparent"/>
-    </linearGradient>
-    <filter id="glowVg"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <filter id="glowStrongVg"><feGaussianBlur stdDeviation="5"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <clipPath id="clipVg"><rect width="900" height="200" rx="16"/></clipPath>
   </defs>
-  <g clip-path="url(#clipVg)">
-    <rect width="900" height="200" rx="16" fill="url(#bgVg)"/>
-    <rect width="900" height="200" rx="16" fill="none" stroke="#a855f7" stroke-width="1" opacity="0.2"/>
-    <g opacity="0.03">
-      <line x1="0" y1="50" x2="900" y2="50" stroke="#a855f7" stroke-width="1"/>
-      <line x1="0" y1="100" x2="900" y2="100" stroke="#a855f7" stroke-width="1"/>
-      <line x1="0" y1="150" x2="900" y2="150" stroke="#a855f7" stroke-width="1"/>
-    </g>
-    <rect x="0" y="0" width="900" height="200" fill="url(#scanlineVg)" opacity="0">
-      <animate attributeName="opacity" values="0;1;0" dur="3.5s" repeatCount="indefinite"/>
-    </rect>
-    <g transform="translate(60,100)">
-      <g filter="url(#glowVg)">
-        <circle cx="0" cy="0" r="8" fill="url(#accentVg)"/>
-        <g stroke="url(#accentVg)" stroke-width="1.5" fill="none" opacity="0.6">
-          <path d="M8,0 L35,18"/>
-          <path d="M8,0 L35,-18"/>
-          <path d="M-8,0 L-35,18"/>
-          <path d="M-8,0 L-35,-18"/>
-        </g>
-        <circle cx="35" cy="18" r="3" fill="#a855f7">
-          <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="35" cy="-18" r="3" fill="#3b82f6">
-          <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="-35" cy="18" r="3" fill="#a855f7">
-          <animate attributeName="opacity" values="1;0.2;1" dur="2.5s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="-35" cy="-18" r="3" fill="#3b82f6">
-          <animate attributeName="opacity" values="1;0.2;1" dur="1.8s" repeatCount="indefinite"/>
-        </circle>
-      </g>
-      <circle cx="0" cy="0" r="45" fill="none" stroke="#a855f7" stroke-width="0.5" opacity="0">
-        <animate attributeName="r" values="30;60" dur="3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values="0.3;0" dur="3s" repeatCount="indefinite"/>
-      </circle>
-    </g>
-    <g transform="translate(180,60)">
-      <text x="0" y="0" font-family="monospace" font-size="42" font-weight="bold" fill="#a855f7" filter="url(#glowStrongVg)">
-        VectorGuard
-        <animate attributeName="opacity" values="1;0.92;1" dur="2.5s" repeatCount="indefinite"/>
-      </text>
-      <text x="0" y="0" font-family="monospace" font-size="42" font-weight="bold" fill="#a855f7" opacity="0.2">
-        <animate attributeName="opacity" values="0.2;0.5;0.2" dur="0.06s" repeatCount="indefinite"/>
-        VectorGuard
-      </text>
-      <text x="0" y="30" font-family="monospace" font-size="13" fill="#888" letter-spacing="3">RAG-POWERED THREAT INTELLIGENCE PLATFORM</text>
-      <text x="0" y="50" font-family="monospace" font-size="11" fill="#666" letter-spacing="1">CVE INGESTION · SEMANTIC SEARCH · SELF-HOSTED</text>
-    </g>
-    <g transform="translate(780, 170)" opacity="0.35">
-      <text font-family="monospace" font-size="9" fill="#a855f7">RAG</text>
-    </g>
-  </g>
+  <rect width="900" height="200" rx="12" fill="url(#bgPr)" stroke="#30363d" stroke-width="1"/>
+  <text x="450" y="85" font-family="monospace" font-size="42" font-weight="bold" fill="#ff0033" text-anchor="middle">VectorGuard</text>
+  <text x="450" y="125" font-family="monospace" font-size="16" fill="#c9d1d9" text-anchor="middle">RAG-powered threat intelligence platform — CVE feeds, pgvector, FastAPI</text>
+  <text x="450" y="160" font-family="monospace" font-size="13" fill="#00ff88" text-anchor="middle">sinCodes11 · defensive / educational · github.com/sinCodes11/vectorguard</text>
 </svg>

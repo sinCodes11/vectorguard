@@ -1,8 +1,14 @@
-# VectorGuard — RAG-Powered Threat Intelligence Platform
-
 <div align="center">
-  <img src="assets/banner.svg" width="100%" />
+  <img src="assets/banner.svg" width="100%"/>
 </div>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square" alt="python">
+  <img src="https://img.shields.io/badge/RAG-pgvector-3b82f6?style=flat-square" alt="RAG">
+  <img src="https://img.shields.io/badge/API-FastAPI-009688?style=flat-square" alt="API">
+  <img src="https://img.shields.io/badge/focus-defensive-00ff88?style=flat-square" alt="focus">
+</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.9%2B-blue?style=flat-square" alt="Python">
